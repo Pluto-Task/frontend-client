@@ -25,15 +25,14 @@
   border: 1px solid #212529;
   border-bottom: none;
   border-top: none;
+}
+.navItem--active {
+  background-color: #212529;
+  color: #fff;
+}
 
-  &-title {
-    font-size: 20px;
-  }
-
-  &--active {
-    background-color: #212529;
-    color: #fff;
-  }
+.navItem-title {
+  font-size: 20px;
 }
 
 .sliderCustom {

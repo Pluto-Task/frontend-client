@@ -7,6 +7,7 @@ import SignUp from "./components/Sign/SignUp/SignUp";
 import SignIn from "./components/Sign/SignIn/SignIn";
 import Main from "./components/pages/Main/Main";
 import { useQuery } from "react-query";
+import { MainProfilePage } from "./components/Profile/MainProfilePage";
 
 export const axiosClient = axios.create({
   baseURL: "https://pluto.somee.com/api",
@@ -43,6 +44,7 @@ const App = () => {
           (true && (
             <>
               <Routes>
+                <Route path="/profile" element={<MainProfilePage />} />
                 <Route path="/events" element={<Main />} />
                 <Route path="/offers" element={<Main />} />
                 <Route path="*" element={<Navigate to="/events" replace />} />

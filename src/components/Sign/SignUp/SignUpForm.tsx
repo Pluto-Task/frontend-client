@@ -43,7 +43,9 @@ const SignUpForm = () => {
 
   const { mutate: submitMutate } = useMutation(submitForm, {
     onError: (error: any) => {
-      dispatch(setAlert({ status: true, type: "error", message: "" }));
+      dispatch(
+        setAlert({ status: true, type: "error", message: "Виникла помилка" })
+      );
     },
     onSuccess: (responseData: any) => {
       dispatch(setIsAuth(true));
@@ -59,6 +61,7 @@ const SignUpForm = () => {
     }
     submitMutate();
   };
+
   return (
     <>
       <h1 className="font-[700] text-[36px] text-[#212B36] leading-[43.5px]">

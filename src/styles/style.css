@@ -1,14 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 #root {
-  min-height: 100vh;
-  width: 100%;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sliderCustom {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    background: black;
+    outline: none;
+}
+
+.sliderCustom::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    border-width: 3px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.slider-container {
+    position: relative;
+}
+
+.slider-value {
+    position: absolute;
+    bottom: -30px;
+    /* Регулюйте відступ від кружечка */
+    transform: translateX(-50%);
+    white-space: nowrap;
 }

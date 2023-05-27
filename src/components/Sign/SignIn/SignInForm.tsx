@@ -8,6 +8,8 @@ import CustomInput from "../../custom/CustomInput";
 import CustomBtn from "../../custom/CustomBtn";
 import Mail from "../../../assets/svg/mail";
 import Lock from "../../../assets/svg/lock";
+import Slider from "../../custom/SlideBart";
+import Hospital from "../../../assets/svg/hospital";
 
 const SignInForm = () => {
   const dispatch = useDispatch();
@@ -99,6 +101,8 @@ const SignInForm = () => {
 
   return (
     <>
+    <Slider />
+    <Hospital/>
       <h1 className="font-[700] text-[36px] text-[#212B36] leading-[43.5px]">
         Sign In
       </h1>

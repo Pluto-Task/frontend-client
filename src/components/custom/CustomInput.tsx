@@ -24,7 +24,7 @@ const Label = (props: any) => {
     <>
       <label
         className={`block mb-[10px] font-[500]  ${
-          isError == true ? "text-red-700" : "text-[#1C2434]"
+          isError == true ? "" : "text-[#1C2434]"
         }`}
       >
         {text}
@@ -51,14 +51,14 @@ const CustomInput = (props: any) => {
           <>
             {isError && (
               <>
-                <h4 className="mt-[10px] text-[#E03616] text-[14px]">
+                <h4 className="mt-[10px] font-[500] text-[#E03616] text-[14px]">
                   {message}
                 </h4>
               </>
             )}
             {!isError && (
               <>
-                <h4 className="mt-[10px] text-slate-800 text-[14px]">
+                <h4 className="mt-[10px] font-[500] text-slate-800 text-[14px]">
                   {message}
                 </h4>
               </>

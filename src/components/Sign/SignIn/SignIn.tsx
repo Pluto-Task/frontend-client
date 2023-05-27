@@ -1,9 +1,11 @@
-import SignUpForm from "../SignUp/SignUpForm";
+import SignInForm from "./SignInForm";
 
 const SignIn = () => {
   return (
     <>
-      <div className="max-w-[350px] w-full mx-auto min-h-[300px]"></div>
+      <div className="max-w-[428px] w-full mx-auto py-[30px]">
+        <SignInForm />
+      </div>
     </>
   );
 };

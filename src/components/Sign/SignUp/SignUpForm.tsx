@@ -18,6 +18,12 @@ const SignUpForm = () => {
     isError: false,
   });
 
+  const [phone, setPhone] = useState({
+    value: "",
+    message: "",
+    isError: false,
+  });
+
   const [email, setEmail] = useState({
     value: "",
     message: "",
@@ -37,14 +43,14 @@ const SignUpForm = () => {
   });
 
   const submitForm = async () => {
-    const response = await axiosClient.post("/register", {});
+    const response = await axiosClient.post("/User/register", {});
     return response.data;
   };
 
   const { mutate: submitMutate } = useMutation(submitForm, {
-    onError: (error: any) => {
+    onError: (e: any) => {
       dispatch(
-        setAlert({ status: true, type: "error", message: "Виникла помилка" })
+        setAlert({ status: true, type: "error", text: e.response.data.detail })
       );
     },
     onSuccess: (responseData: any) => {
@@ -57,7 +63,12 @@ const SignUpForm = () => {
     e.preventDefault();
 
     if (password1.value != password2.value) {
-      return;
+      setPassword2((prev) => {
+        const copy = { ...prev };
+        copy.isError = true;
+        copy.message = "Паролі не однакові";
+        return copy;
+      });
     }
     submitMutate();
   };
@@ -72,6 +83,7 @@ const SignUpForm = () => {
           <div className="flex flex-col gap-[40px]">
             <CustomInput
               {...name}
+              required
               onChange={(e: any) => {
                 setName((prev) => {
                   const copy = { ...prev };
@@ -87,6 +99,7 @@ const SignUpForm = () => {
             />
             <CustomInput
               {...email}
+              required
               onChange={(e: any) => {
                 setEmail((prev) => {
                   const copy = { ...prev };
@@ -101,7 +114,24 @@ const SignUpForm = () => {
               // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
             />
             <CustomInput
+              {...phone}
+              required
+              onChange={(e: any) => {
+                setPhone((prev) => {
+                  const copy = { ...prev };
+                  copy.value = e.target.value;
+                  return copy;
+                });
+              }}
+              className={"w-full"}
+              label={"Telephone"}
+              type={"telephone"}
+              data-name="phone"
+              // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
+            />
+            <CustomInput
               {...password1}
+              required
               onChange={(e: any) => {
                 setPassword1((prev) => {
                   const copy = { ...prev };
@@ -123,6 +153,7 @@ const SignUpForm = () => {
                   return copy;
                 });
               }}
+              required
               className={"w-full"}
               label="Re-type Password"
               type={"password"}

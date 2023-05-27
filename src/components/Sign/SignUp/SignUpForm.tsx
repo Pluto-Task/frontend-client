@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import CustomInput from "../../custom/CustomInput";
 import { Link } from "react-router-dom";
 import CustomBtn from "../../custom/CustomBtn";
+import Person from "../../../assets/svg/person";
+import Mail from "../../../assets/svg/mail";
+import Lock from "../../../assets/svg/lock";
+import Phone from "../../../assets/svg/phone";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -95,7 +99,7 @@ const SignUpForm = () => {
               label="Name"
               type={"text"}
               data-name="name"
-              // icon={<PersonIcon className={"fill-[#64748B] opacity-40"} />}
+              icon={<Person className={"fill-[#64748B] opacity-40"} />}
             />
             <CustomInput
               {...email}
@@ -111,7 +115,7 @@ const SignUpForm = () => {
               label={"Email"}
               type={"email"}
               data-name="email"
-              // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
+              icon={<Mail className={"fill-[#64748B] opacity-40"} />}
             />
             <CustomInput
               {...phone}
@@ -127,7 +131,7 @@ const SignUpForm = () => {
               label={"Telephone"}
               type={"telephone"}
               data-name="phone"
-              // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
+              icon={<Phone className={"fill-[#64748B] opacity-40"} />}
             />
             <CustomInput
               {...password1}
@@ -142,7 +146,7 @@ const SignUpForm = () => {
               className={"w-full"}
               label="Password"
               type={"password"}
-              // icon={<LockerIcon className={"fill-[#64748B]"} />}
+              icon={<Lock className={"fill-[#64748B]"} />}
             />
             <CustomInput
               {...password2}
@@ -157,7 +161,7 @@ const SignUpForm = () => {
               className={"w-full"}
               label="Re-type Password"
               type={"password"}
-              // icon={<LockerIcon className={"fill-[#64748B]"} />}
+              icon={<Lock className={"fill-[#64748B]"} />}
             />
           </div>
           <div className="flex flex-col mt-[60px]">

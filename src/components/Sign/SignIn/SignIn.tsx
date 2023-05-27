@@ -1,13 +1,13 @@
-import SignUpForm from "./SignUpForm";
+import SignInForm from "./SignInForm";
 
-const SignUp = () => {
+const SignIn = () => {
   return (
     <>
       <div className="max-w-[428px] w-full mx-auto py-[30px]">
-        <SignUpForm />
+        <SignInForm />
       </div>
     </>
   );
 };
 
-export default SignUp;
+export default SignIn;

@@ -4,6 +4,7 @@ import Layout from "./components/Wrappers/Layout";
 import SignWrapper from "./components/Wrappers/SignWrapper";
 import { Navigate, Route, Routes } from "react-router";
 import SignUp from "./components/Sign/SignUp/SignUp";
+import Sv from "./assets/sv";
 import SignIn from "./components/Sign/SignIn/SignIn";
 
 export const axiosClient = axios.create({

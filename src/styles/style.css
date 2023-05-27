@@ -38,7 +38,6 @@
 
 .slider-value {
     position: absolute;
-    bottom: -30px;
     /* Регулюйте відступ від кружечка */
     transform: translateX(-50%);
     white-space: nowrap;

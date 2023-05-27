@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.grid-header {
+  grid-template-columns: 0.83fr 1fr;
+}
+
+.grid-navbar {
+  grid-template-columns: 1fr 1fr 0.6fr;
+}
+
+.navItem {
+  border: 1px solid #212529;
+  border-bottom: none;
+  border-top: none;
+
+  &-title {
+    font-size: 20px;
+  }
+
+  &--active {
+    background-color: #212529;
+    color: #fff;
+  }
+}

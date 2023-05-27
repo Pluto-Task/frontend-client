@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./styles/style.css";
+import "./styles/style.scss";
 import store from "./redux/store.ts";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";

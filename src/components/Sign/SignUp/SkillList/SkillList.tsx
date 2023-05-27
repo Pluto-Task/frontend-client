@@ -37,7 +37,14 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
   };
 
   const fetchSkills = async () => {
-    const response = await axiosClient.get("/skill/getAll");
+    const response = await axios.get(
+      "http://pluto.somee.com/api/skill/getAll",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
     return response.data;
   };
 

@@ -8,6 +8,11 @@ import { Link } from "react-router-dom";
 import CustomBtn from "../../custom/CustomBtn";
 import SkillList from "./SkillList/SkillList";
 
+import Person from "../../../assets/svg/person";
+import Mail from "../../../assets/svg/mail";
+import Lock from "../../../assets/svg/lock";
+import Phone from "../../../assets/svg/phone";
+
 export type UserSkill = {
   skill: string;
   exp: number;
@@ -16,7 +21,7 @@ export type UserSkill = {
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const { setIsAuth, setAlert } = globalActions;
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const [name, setName] = useState({
     value: "",
@@ -182,7 +187,7 @@ const SignUpForm = () => {
                   type={"text"}
                   data-name="name"
                   onFocus={() => handleOnFocus()}
-                  // icon={<PersonIcon className={"fill-[#64748B] opacity-40"} />}
+                  icon={<Person className={"fill-[#64748B] opacity-40"} />}
                 />
                 <CustomInput
                   {...email}
@@ -199,7 +204,7 @@ const SignUpForm = () => {
                   type={"email"}
                   data-name="email"
                   onFocus={() => handleOnFocus()}
-                  // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
+                  icon={<Mail className={"fill-[#64748B] opacity-40"} />}
                 />
                 <CustomInput
                   {...phone}
@@ -216,7 +221,7 @@ const SignUpForm = () => {
                   type={"telephone"}
                   data-name="phone"
                   onFocus={() => handleOnFocus()}
-                  // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-40"} />}
+                  icon={<Phone className={"fill-[#64748B] opacity-40"} />}
                 />
                 <CustomInput
                   {...password1}
@@ -232,7 +237,7 @@ const SignUpForm = () => {
                   label="Пароль"
                   type={"password"}
                   onFocus={() => handleOnFocus()}
-                  // icon={<LockerIcon className={"fill-[#64748B]"} />}
+                  icon={<Lock className={"fill-[#64748B] opacity-40"} />}
                 />
                 <CustomInput
                   {...password2}
@@ -248,7 +253,7 @@ const SignUpForm = () => {
                   label="Повторіть пароль"
                   type={"password"}
                   onFocus={() => handleOnFocus()}
-                  // icon={<LockerIcon className={"fill-[#64748B]"} />}
+                  icon={<Lock className={"fill-[#64748B] opacity-40"} />}
                 />
               </div>
               <div className="mt-[60px]">

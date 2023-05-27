@@ -6,6 +6,8 @@ import { globalActions } from "../../../redux/features/globalSlice";
 import { axiosClient } from "../../../App";
 import CustomInput from "../../custom/CustomInput";
 import CustomBtn from "../../custom/CustomBtn";
+import Mail from "../../../assets/svg/mail";
+import Lock from "../../../assets/svg/lock";
 
 const SignInForm = () => {
   const dispatch = useDispatch();
@@ -111,7 +113,7 @@ const SignInForm = () => {
               label="Email"
               type={"text"}
               {...email}
-              // icon={<EnvelopeIcon className={"fill-[#64748B] opacity-50"} />}
+              icon={<Mail className={"fill-[#64748B] opacity-40"} />}
             />
             <CustomInput
               required
@@ -121,7 +123,7 @@ const SignInForm = () => {
               label="Password"
               type={"password"}
               {...password}
-              // icon={<LockerIcon className={"fill-[#64748B]"} />}
+              icon={<Lock className={"fill-[#64748B] opacity-40"} />}
             />
           </div>
           <div className="flex flex-col mt-[60px]">

@@ -28,6 +28,7 @@ const App = () => {
                 <Route path="*" element={<Navigate to="/sign-in" replace />} />
               </Routes>
             </SignWrapper>
+            
           </>
         )}
         {isAuth && <></>}

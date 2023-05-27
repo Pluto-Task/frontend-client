@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-// import { ReactComponent as InfoIcon } from "../../../assets/svg/info.svg";
 import { useEffect } from "react";
 import { globalActions } from "../../redux/features/globalSlice";
 

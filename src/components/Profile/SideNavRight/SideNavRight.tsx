@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export const SideNavLeft = () => {
+export const SideNavRight = () => {
   return (
     <div className="flex flex-col gap-2.5 pl-[45px]">
       <NavLink

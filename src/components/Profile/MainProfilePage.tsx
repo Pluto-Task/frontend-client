@@ -1,18 +1,18 @@
-import { SideNavLeft } from "./SideNavLeft/SideNavLeft";
-import { SideRight } from "./SideRight/SideRight";
+import { SideNavRight } from "./SideNavRight/SideNavRight";
+import { SideLeft } from "./SideLeft/SideLeft";
 import { Outlet } from "react-router-dom";
 
 export const MainProfilePage = () => {
   return (
     <div className="flex h-screen pt-[24px]">
       <div className="flex-[1_1_20%]">
-        <SideRight />
+        <SideLeft />
       </div>
       <div className="flex-[1_1_60%]">
         <Outlet />
       </div>
       <div className="flex-[1_1_20%]">
-        <SideNavLeft />
+        <SideNavRight />
       </div>
     </div>
   );

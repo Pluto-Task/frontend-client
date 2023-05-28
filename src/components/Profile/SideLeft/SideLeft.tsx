@@ -1,6 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export const SideRight = () => {
+export const SideLeft = () => {
 
   return (
     <div className="pl-[30px]">

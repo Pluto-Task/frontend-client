@@ -11,12 +11,14 @@ import { MainProfilePage } from "./components/Profile/MainProfilePage";
 import { GeneralInformation } from "./components/Profile/GeneralInformation/GeneralInformation";
 import { ArchiveEvents } from "./components/Profile/ArchiveEvents/ArchiveEvents";
 import { globalActions } from "./redux/features/globalSlice";
+import Information from "./components/Information/Information";
 
 export const axiosClient = axios.create({
   baseURL: "https://pluto.somee.com/api",
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
   },
 });
 
@@ -67,6 +69,7 @@ const App = () => {
                 <Route path="/profile" element={<GeneralInformation />} />
                 <Route path="/profile/history" element={<ArchiveEvents />} />
               </Route>
+              <Route path="/event/:id" element={<Information />} />
               <Route path="/events" element={<Main />} />
               <Route path="/offers" element={<Main />} />
               <Route path="*" element={<Navigate to="/events" replace />} />

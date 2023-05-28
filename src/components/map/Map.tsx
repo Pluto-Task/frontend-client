@@ -22,6 +22,7 @@ function MyMap(props: any) {
         defaultZoom={11}
       >
         <Marker width={50} anchor={[50.879, 4.6997]} />
+
         <Marker width={50} anchor={[50.450001, 30.523333]}></Marker>
       </Map>
     </div>

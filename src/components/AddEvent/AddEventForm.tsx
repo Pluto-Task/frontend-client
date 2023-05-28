@@ -7,6 +7,10 @@ import CustomTextArea from "../custom/CustomTextArea";
 import CustomBtn from "../custom/CustomBtn";
 import { UserSkill } from "../Sign/SignUp/SignUpForm";
 import SkillListOption from "../Sign/SignUp/SkillList/SkillListOption";
+import axios from "axios";
+import { axiosClient } from "../../App";
+import jwtDecode from "jwt-decode";
+import { useMutation } from "react-query";
 
 const ReturnSvg = () => {
   return (
@@ -64,9 +68,13 @@ const AddEventForm = () => {
     isError: false,
   });
   const [skills, setSkills] = useState<UserSkill[]>([]);
-  const [coordinates, setCoordinate] = useState({ x: "", y: "" });
+  const [address, setAddress] = useState({
+    value: "",
+    message: "",
+    isError: false,
+  });
 
-  const titles = ["Створення події", "Навики учасників", "Локація"];
+  const titles = ["Створення події", "Навики учасників"];
 
   const selectedSkills: number[] = useMemo(() => {
     if (skills.length != 0) {
@@ -89,7 +97,37 @@ const AddEventForm = () => {
     }
   };
 
-  const postEventRequest = async () => {};
+  const postEventRequest = async () => {
+    const decodedUser: any = jwtDecode(localStorage.getItem("token")!);
+
+    const response = await axiosClient.post("/userEvent/createEvent", {
+      title: title.value,
+      description: description.value,
+      startDate: startDate.value,
+      endDate: finishDate.value,
+      maxPeople: countOfPeople.value,
+      currentPeople: 0,
+      skills: skills.map((skillItem: any) => {
+        const { skill, exp } = skillItem;
+        return {
+          skillId: skill,
+          exp,
+        };
+      }),
+      address: "Kyiv",
+      build: address.value,
+      phoneNumber: phone.value,
+      coordinates: "50.448447,30.529039",
+      email: decodedUser.email,
+    });
+  };
+
+  const { mutate } = useMutation(postEventRequest, {
+    onSuccess: (responseData) => {
+      console.log("Success");
+      dispatch(setIsAddEvent(false));
+    },
+  });
 
   return (
     <>
@@ -97,6 +135,7 @@ const AddEventForm = () => {
         className="px-[30px] py-[15px] bg-white min-h-[500px] rounded-[6px]"
         onSubmit={(e) => {
           e.preventDefault();
+          mutate();
         }}
       >
         <div className="flex flex-col">
@@ -150,6 +189,17 @@ const AddEventForm = () => {
                     });
                   }}
                   label={"Контактний телефон"}
+                />
+                <CustomInput
+                  label={"Адреса"}
+                  value={address.value}
+                  onChange={(e: any) => {
+                    setAddress((prev) => {
+                      const copy = { ...prev };
+                      copy.value = e.target.value;
+                      return copy;
+                    });
+                  }}
                 />
                 <CustomInput
                   label={"Кількість людей"}

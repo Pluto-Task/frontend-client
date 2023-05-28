@@ -18,6 +18,7 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
   }, [skills]);
 
   const handleCheck = (skillClicked: number) => {
+    console.log(skillClicked);
     if (skills.some((skill) => skill.skill == skillClicked)) {
       setSkills((prev: UserSkill[]) => {
         const copy = [...prev];

@@ -15,6 +15,7 @@ const SkillListOption = (props: {
     setSkills((prev: UserSkill[]) => {
       if (prev && prev.length != 0) {
         const copy = [...prev];
+
         const toEdit = copy.find((copy: UserSkill) => copy.skill == skill);
         toEdit!.exp = Number(input);
         return copy;

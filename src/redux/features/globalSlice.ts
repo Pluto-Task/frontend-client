@@ -6,6 +6,8 @@ const initialState = {
     ? isTokenValid(localStorage.getItem("token")!)
     : false,
   alert: { status: false, type: null, text: null },
+  isAddEvent: false,
+  skillsList: null,
 };
 
 const globalSlice = createSlice({
@@ -17,6 +19,12 @@ const globalSlice = createSlice({
     },
     setAlert: (state, action) => {
       state.alert = action.payload;
+    },
+    setIsAddEvent: (state, action) => {
+      state.isAddEvent = action.payload;
+    },
+    setSkillsList: (state, action) => {
+      state.skillsList = action.payload;
     },
   },
 });

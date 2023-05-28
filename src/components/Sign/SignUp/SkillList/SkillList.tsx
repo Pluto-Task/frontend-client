@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UserSkill } from "../SignUpForm";
 import SkillListOption from "./SkillListOption";
 import { useQuery } from "react-query";
@@ -17,10 +17,7 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
     return [];
   }, [skills]);
 
-  const [skillsList, setSkillsList] = useState<string[] | null>([
-    "ХЕлоу вор",
-    "Fdf",
-  ]);
+  const [skillsList, setSkillsList] = useState<string[] | null>(null);
 
   const handleCheck = (skillClicked: string) => {
     if (skills.some((skill) => skill.skill == skillClicked)) {
@@ -38,9 +35,10 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
 
   const fetchSkills = async () => {
     const response = await axios.get(
-      "http://pluto.somee.com/api/skill/getAll",
+      "https://pluto.somee.com/api/skill/getAll",
       {
         headers: {
+          "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
       }
@@ -50,7 +48,7 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
 
   useQuery("fetch-skills", fetchSkills, {
     onSuccess: (responseData) => {
-      setSkills(responseData);
+      setSkillsList(responseData);
     },
   });
 

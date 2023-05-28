@@ -54,7 +54,7 @@ const Alert = () => {
           <div className="text-[14px]">
             <span className="font-medium">
               {`${type.charAt(0).toUpperCase()}${type.slice(1)}`}!
-            </span>{" "}
+            </span>
             {text}
           </div>
         </div>

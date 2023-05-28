@@ -20,27 +20,6 @@ interface Skill {
   experienceYears: number;
 }
 
-const userTemp: User = {
-  email: "smth@out.com",
-  name: "TestName2",
-  phone: "123456",
-  skills: [
-    {
-      id: 10,
-      experienceYears: 10,
-    },
-    {
-      id: 1,
-      experienceYears: 5.1,
-    },
-  ],
-  dateCreated: "2023-05-27T22:33:39.2219891",
-  rating: 3.3,
-  ratingCount: 3,
-  numberOfEventsTookPart: 0,
-  numberOfEventsCreated: 0,
-};
-
 export const GeneralInformation = () => {
   const queryClient = useQueryClient();
 
@@ -62,7 +41,7 @@ export const GeneralInformation = () => {
   });
 
   const postEventRequest = async () => {
-    const response = await axiosClient.put("/user/update", {
+    await axiosClient.put("/user/update", {
       name: user?.name,
       phone: user?.phone,
       skills: user?.skills,
@@ -76,7 +55,6 @@ export const GeneralInformation = () => {
   });
 
   if (user === undefined) {
-    // setUser(userTemp);
     return <>Not found</>;
   }
 

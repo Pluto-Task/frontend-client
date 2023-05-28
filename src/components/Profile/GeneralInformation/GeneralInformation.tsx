@@ -60,8 +60,8 @@ export const GeneralInformation = () => {
   });
 
   if (user === undefined) {
-    setUser(userTemp);
-    // return <>Not found</>
+    // setUser(userTemp);
+    return <>Not found</>
   }
 
   return (

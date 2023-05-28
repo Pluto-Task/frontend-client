@@ -1,6 +1,6 @@
 export const GeneralInformation = () => {
   return (
-    <>
+    <div className="relative h-full">
       <p className="text-4xl text-[#ADB5BD] font-semibold mb-[40px]">
         Загальна інформація
       </p>
@@ -49,6 +49,6 @@ export const GeneralInformation = () => {
       >
         Submit
       </button>
-    </>
+    </div>
   );
 };

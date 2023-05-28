@@ -14,7 +14,7 @@ import Lock from "../../../assets/svg/lock";
 import Phone from "../../../assets/svg/phone";
 
 export type UserSkill = {
-  skill: string;
+  skill: number;
   exp: number;
 };
 

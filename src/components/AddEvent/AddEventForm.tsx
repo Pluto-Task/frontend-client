@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import CustomInput from "../custom/CustomInput";
 import { globalActions } from "../../redux/features/globalSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomDatePicker from "../custom/CustomDatePicker";
 import CustomTextArea from "../custom/CustomTextArea";
 import CustomBtn from "../custom/CustomBtn";
+import { UserSkill } from "../Sign/SignUp/SignUpForm";
+import SkillListOption from "../Sign/SignUp/SkillList/SkillListOption";
 
 const ReturnSvg = () => {
   return (
@@ -25,6 +27,8 @@ const ReturnSvg = () => {
 
 const AddEventForm = () => {
   const { setIsAddEvent } = globalActions;
+  const { skillsList } = useSelector((state: any) => state.global);
+
   const dispatch = useDispatch();
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -59,15 +63,45 @@ const AddEventForm = () => {
     message: "",
     isError: false,
   });
+  const [skills, setSkills] = useState<UserSkill[]>([]);
+  const [coordinates, setCoordinate] = useState({ x: "", y: "" });
 
   const titles = ["Створення події", "Навики учасників", "Локація"];
 
+  const selectedSkills: number[] = useMemo(() => {
+    if (skills.length != 0) {
+      return skills.map((skill) => skill.skill);
+    }
+    return [];
+  }, [skills]);
+
+  const handleCheck = (skillClicked: number) => {
+    if (skills.some((skill) => skill.skill == skillClicked)) {
+      setSkills((prev: UserSkill[]) => {
+        const copy = [...prev];
+        return copy.filter((skill) => skill.skill != skillClicked);
+      });
+    } else {
+      setSkills((prev: UserSkill[]) => [
+        ...prev,
+        { skill: skillClicked, exp: 0 },
+      ]);
+    }
+  };
+
   return (
     <>
-      <form className="px-[15px] py-[15px] bg-white min-h-[500px] rounded-[6px]">
+      <form
+        className="px-[30px] py-[15px] bg-white min-h-[500px] rounded-[6px]"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("Submited");
+        }}
+      >
         <div className="flex flex-col">
           <div className="flex justify-between">
             <button
+              type="button"
               onClick={() => {
                 if (currentStep == 1) dispatch(setIsAddEvent(false));
                 setCurrentStep((prev) => prev - 1);
@@ -161,7 +195,35 @@ const AddEventForm = () => {
           )}
           {currentStep == 2 && (
             <>
-              <div></div>
+              <div className="flex flex-col w-full mt-[22px]">
+                <div className="flex flex-col w-full gap-[16px]">
+                  <div className="flex justify-end text-[14px] text-[#343A40]">
+                    Досвід у рокaх:
+                  </div>
+                  <ul className="flex flex-col w-full gap-[39px]">
+                    {skillsList &&
+                      skillsList.map((skill: any) => {
+                        return (
+                          <>
+                            <SkillListOption
+                              isChecked={selectedSkills.includes(skill.id)}
+                              handleCheck={handleCheck}
+                              skill={skill}
+                              setSkills={setSkills}
+                            />
+                          </>
+                        );
+                      })}
+                  </ul>
+                </div>
+                <CustomBtn
+                  type="button"
+                  className={"bg-blue-700 text-white mt-[35px]"}
+                  onClick={() => setCurrentStep((prev) => prev + 1)}
+                >
+                  Далі
+                </CustomBtn>
+              </div>
             </>
           )}
           {currentStep == 3 && <></>}

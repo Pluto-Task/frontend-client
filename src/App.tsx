@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Layout from "./components/Wrappers/Layout";
 import SignWrapper from "./components/Wrappers/SignWrapper";
@@ -7,6 +7,7 @@ import SignUp from "./components/Sign/SignUp/SignUp";
 import SignIn from "./components/Sign/SignIn/SignIn";
 import Main from "./components/pages/Main/Main";
 import { useQuery } from "react-query";
+import { globalActions } from "./redux/features/globalSlice";
 
 export const axiosClient = axios.create({
   baseURL: "https://pluto.somee.com/api",
@@ -18,8 +19,28 @@ export const axiosClient = axios.create({
 
 const App = () => {
   const { isAuth } = useSelector((state: any) => state.global);
+  const dispatch = useDispatch();
+  const { setSkillsList } = globalActions;
 
-  useQuery("fetch-skills");
+  const fetchSkills = async () => {
+    const response = await axios.get(
+      "https://pluto.somee.com/api/skill/getAll",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response.data;
+  };
+
+  useQuery("fetch-skills", fetchSkills, {
+    onSuccess: (responseData) => {
+      dispatch(setSkillsList(responseData));
+      console.log(responseData);
+    },
+  });
 
   return (
     <>

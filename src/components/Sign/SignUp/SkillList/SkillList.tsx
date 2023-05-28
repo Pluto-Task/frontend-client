@@ -4,22 +4,20 @@ import SkillListOption from "./SkillListOption";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { axiosClient } from "../../../../App";
+import { useSelector } from "react-redux";
 
 const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
   const { skills, setSkills } = props;
+  const { skillsList } = useSelector((state: any) => state.global);
 
-  console.log(skills);
-
-  const selectedSkills: string[] = useMemo(() => {
+  const selectedSkills: number[] = useMemo(() => {
     if (skills.length != 0) {
       return skills.map((skill) => skill.skill);
     }
     return [];
   }, [skills]);
 
-  const [skillsList, setSkillsList] = useState<string[] | null>(null);
-
-  const handleCheck = (skillClicked: string) => {
+  const handleCheck = (skillClicked: number) => {
     if (skills.some((skill) => skill.skill == skillClicked)) {
       setSkills((prev: UserSkill[]) => {
         const copy = [...prev];
@@ -32,25 +30,6 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
       ]);
     }
   };
-
-  const fetchSkills = async () => {
-    const response = await axios.get(
-      "https://pluto.somee.com/api/skill/getAll",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    );
-    return response.data;
-  };
-
-  useQuery("fetch-skills", fetchSkills, {
-    onSuccess: (responseData) => {
-      setSkillsList(responseData);
-    },
-  });
 
   return (
     <>
@@ -67,11 +46,11 @@ const SkillList = (props: { skills: UserSkill[]; setSkills: Function }) => {
           </div>
           <ul className="flex flex-col gap-[39px]">
             {skillsList &&
-              skillsList.map((skill: string) => {
+              skillsList.map((skill: any) => {
                 return (
                   <>
                     <SkillListOption
-                      isChecked={selectedSkills.includes(skill)}
+                      isChecked={selectedSkills.includes(skill.id)}
                       handleCheck={handleCheck}
                       skill={skill}
                       setSkills={setSkills}

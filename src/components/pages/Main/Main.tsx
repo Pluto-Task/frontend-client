@@ -187,7 +187,7 @@ const Main = () => {
           {isSkillsFilter && (
             <FilterBlock filter={filter} setFilter={setFilter} />
           )}
-          <ul className="flex flex-col gap-[50px] w-[90%]">
+          <ul className="flex flex-col gap-[50px] w-[100%]">
             {filteredCards!.length == 0 ? (
               <>
                 {cards &&

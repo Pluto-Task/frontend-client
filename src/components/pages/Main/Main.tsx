@@ -154,7 +154,7 @@ const Main = () => {
             <Link to="/history" className="text-[20px] text-black">
               Архів подій
             </Link>
-            <Link to="/account" className="text-[20px] text-black">
+            <Link to="/profile/" className="text-[20px] text-black">
               Мій акаунт
             </Link>
           </div>

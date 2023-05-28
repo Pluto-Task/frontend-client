@@ -133,7 +133,7 @@ const Main = () => {
       <Header />
       <main className="flex flex-col px-[25px]">
         <div className="flex flex-col sm:flex-row sm:flex sm:justify-center gap-[30px] xl:justify-between mt-[36px] items-center">
-          <div className="flex gap-[30px] items-center">
+          <div className="flex gap-[30px] flex-wrap items-center">
             <Slider
               changeCountOfPeople={(value: any) => {
                 setFilter((prev) => {
@@ -158,20 +158,22 @@ const Main = () => {
                 }}
               />
             </div> */}
-            <CustomBtn
-              onClick={() => setIsSkillsFilter(!isSkillsFilter)}
-              className={"bg-neutral-800 max-w-[150px] w-full text-[#fff]"}
-            >
-              {isSkillsFilter ? "Карта" : "Фільтр"}
-            </CustomBtn>
-            <CustomBtn
-              onClick={() => {
-                filteredCardsRefetch();
-              }}
-              className={"bg-blue-700 max-w-[150px] w-full text-[#fff]"}
-            >
-              Шукати
-            </CustomBtn>
+            <div className="flex gap-[20px] w-fit">
+              <CustomBtn
+                onClick={() => setIsSkillsFilter(!isSkillsFilter)}
+                className={"bg-neutral-800 max-w-[150px] text-[#fff]"}
+              >
+                {isSkillsFilter ? "Карта" : "Фільтр"}
+              </CustomBtn>
+              <CustomBtn
+                onClick={() => {
+                  filteredCardsRefetch();
+                }}
+                className={"bg-blue-700 max-w-[150px] w-full text-[#fff]"}
+              >
+                Шукати
+              </CustomBtn>
+            </div>
           </div>
           <div className="flex gap-[80px]">
             <Link to="/profile/history" className="text-[20px] text-black">
@@ -188,21 +190,10 @@ const Main = () => {
             <FilterBlock filter={filter} setFilter={setFilter} />
           )}
           <ul className="flex flex-col gap-[50px] w-[100%]">
-            {filteredCards!.length == 0 ? (
-              <>
-                {cards &&
-                  cards.map((card: any) => {
-                    return <Card key={uuid()} data={card} />;
-                  })}
-              </>
-            ) : (
-              <>
-                {filteredCards &&
-                  filteredCards.map((card: any) => {
-                    return <Card key={uuid()} data={card} />;
-                  })}
-              </>
-            )}
+            {cards &&
+              cards.map((card: any) => {
+                return <Card key={uuid()} data={card} />;
+              })}
           </ul>
         </div>
       </main>

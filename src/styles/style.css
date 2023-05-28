@@ -17,7 +17,7 @@
 }
 
 .grid-header {
-  grid-template-columns: 0.83fr 1fr;
+  grid-template-columns: 1fr 0.95fr;
 }
 
 @media screen and (max-width: 780px) {
@@ -78,5 +78,5 @@
 
 .grid-information {
   display: grid;
-  grid-template-columns: 0.5fr 1fr;
+  grid-template-columns: 0.7fr 1fr;
 }

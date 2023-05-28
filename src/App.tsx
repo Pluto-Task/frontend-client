@@ -45,31 +45,26 @@ const App = () => {
   return (
     <>
       <Layout>
-        {!isAuth ||
-          (false && (
-            <>
-              <SignWrapper>
-                <Routes>
-                  <Route path="/sign-in" element={<SignIn />} />
-                  <Route path="/sign-up" element={<SignUp />} />
-                  <Route
-                    path="*"
-                    element={<Navigate to="/sign-in" replace />}
-                  />
-                </Routes>
-              </SignWrapper>
-            </>
-          ))}
-        {isAuth ||
-          (true && (
-            <>
+        {!isAuth && (
+          <>
+            <SignWrapper>
               <Routes>
-                <Route path="/events" element={<Main />} />
-                <Route path="/offers" element={<Main />} />
-                <Route path="*" element={<Navigate to="/events" replace />} />
+                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="*" element={<Navigate to="/sign-in" replace />} />
               </Routes>
-            </>
-          ))}
+            </SignWrapper>
+          </>
+        )}
+        {isAuth && (
+          <>
+            <Routes>
+              <Route path="/events" element={<Main />} />
+              <Route path="/offers" element={<Main />} />
+              <Route path="*" element={<Navigate to="/events" replace />} />
+            </Routes>
+          </>
+        )}
       </Layout>
     </>
   );

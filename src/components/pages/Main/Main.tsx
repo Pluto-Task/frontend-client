@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { skillsIcons } from "../../../data";
 import Slider from "../../custom/SlideBart";
+import MyMap from "../../map/Map";
 
 const FilterBlock = (props: any) => {
   const { filter, setFilter } = props;
@@ -78,7 +79,8 @@ const Main = () => {
             </Link>
           </div>
         </div>
-        <div className="flex w-full mt-[64px]">
+        <div className="grid grid-cols-2 gap-[60px] w-full mt-[64px]">
+          <MyMap className={"flex-1 h-[770px]"} />
           <FilterBlock filter={filter} setFilter={setFilter} />
         </div>
       </main>

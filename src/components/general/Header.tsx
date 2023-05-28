@@ -76,7 +76,7 @@ const CityInput = () => {
 const Header = () => {
   return (
     <>
-      <header className="h-[160px] flex border-b border-[#000000]">
+      <header className="xl:h-[140px] flex border-b border-[#000000]">
         <div className="grid grid-header h-full w-full">
           <CityInput />
           <NavBar />

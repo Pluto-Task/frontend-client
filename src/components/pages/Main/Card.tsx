@@ -11,7 +11,7 @@ const Card = (props: any) => {
 
   return (
     <>
-      <Link to={`/event/${id}`}>
+      <Link to={`/event/${id}`} onClick={() => window.scrollTo(0, 0)}>
         <div className="p-[20px] bg-[#F7F9FE]">
           <div className="flex justify-between">
             <div className="text-[42px] font-[500] text-[#212529]">{title}</div>

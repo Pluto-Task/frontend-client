@@ -12,6 +12,7 @@ import { GeneralInformation } from "./components/Profile/GeneralInformation/Gene
 import { ArchiveEvents } from "./components/Profile/ArchiveEvents/ArchiveEvents";
 import { globalActions } from "./redux/features/globalSlice";
 import Information from "./components/Information/Information";
+import Alert from "./components/custom/Alert";
 
 export const axiosClient = axios.create({
   baseURL: "https://pluto.somee.com/api",
@@ -77,6 +78,7 @@ const App = () => {
           </>
         )}
       </Layout>
+      <Alert />
     </>
   );
 };

@@ -53,6 +53,8 @@ const SignInForm = () => {
     },
   });
 
+  console.log(localStorage.getItem("token"));
+
   const handlerSubmit = (e: any) => {
     e.preventDefault();
 

@@ -20,6 +20,13 @@
   grid-template-columns: 0.83fr 1fr;
 }
 
+@media screen and (max-width: 780px) {
+  .grid-header {
+    grid-template-columns: 1fr;
+    grid-template-rows: 2;
+  }
+}
+
 .grid-navbar {
   grid-template-columns: 1fr 1fr 0.6fr;
 }
@@ -63,8 +70,8 @@
 }
 
 .slider-value {
-    position: absolute;
-    /* Регулюйте відступ від кружечка */
-    transform: translateX(-50%);
-    white-space: nowrap;
+  position: absolute;
+  /* Регулюйте відступ від кружечка */
+  transform: translateX(-50%);
+  white-space: nowrap;
 }

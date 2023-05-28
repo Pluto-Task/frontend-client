@@ -23,7 +23,7 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="w-full grid grid-navbar h-[160px] grid-cols-3">
+      <div className="w-full grid grid-navbar h-[120px] xl:h-[140px] grid-cols-3">
         {navItems.map((navItem) => {
           const { link, title, total } = navItem;
 
@@ -48,7 +48,11 @@ const NavBar = () => {
           className="flex justify-center items-center"
           onClick={() => dispatch(setIsAddEvent(true))}
         >
-          <Cross className={"w-[56px] h-[56px] rotate-[-45deg]"} />
+          <Cross
+            className={
+              "w-[24px] h-[24px] xl:w-[56px] xl:h-[56px] rotate-[-45deg]"
+            }
+          />
         </button>
       </div>
     </>

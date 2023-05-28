@@ -40,7 +40,7 @@ const Alert = () => {
   }, [alert]);
 
   if (!status) {
-    return;
+    return <></>;
   }
 
   return (

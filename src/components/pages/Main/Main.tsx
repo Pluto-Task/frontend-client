@@ -21,7 +21,7 @@ const FilterBlock = (props: any) => {
   if (!skillsList) return <></>;
   return (
     <>
-      <div className="grid grid-cols-2 max-w-[581px] gap-x-[50px] gap-y-[39px] w-full h-fit">
+      <div className="md:grid md:grid-cols-2 flex flex-col xl:max-w-[581px] gap-x-[50px] gap-y-[39px] w-full h-fit">
         {skillsList.map((skill: any) => {
           const { id, name } = skill;
           return (
@@ -76,7 +76,13 @@ const Main = () => {
   const [filteredCards, setFilteredCards] = useState<any[] | null>([]);
 
   const fetchCards = async () => {
-    const response = await axiosClient.get("/userEvent/getAll");
+    const response = await axiosClient.get("/userEvent/getAll", {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return response.data;
   };
 
@@ -87,11 +93,21 @@ const Main = () => {
   });
 
   const fetchFilteredCards = async () => {
-    const response = await axiosClient.post("/userEvent/getByFilter", {
-      "city": "Kyiv",
-      maxPeople: filter.countOfPeople,
-      skills: filter.skills,
-    });
+    const response = await axiosClient.post(
+      "/userEvent/getByFilter",
+      {
+        "city": "Kyiv",
+        maxPeople: filter.countOfPeople,
+        skills: filter.skills,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     return response.data;
   };
 
@@ -103,8 +119,6 @@ const Main = () => {
   useEffect(() => {
     filteredData && setFilteredCards(filteredData.events);
   }, [filteredData]);
-
-  console.log(filteredCards);
 
   useEffect(() => {
     data && setCards(data.events);
@@ -124,7 +138,7 @@ const Main = () => {
     <>
       <Header />
       <main className="flex flex-col px-[25px]">
-        <div className="flex justify-between mt-[36px] items-center">
+        <div className="flex flex-col sm:flex-row sm:flex sm:justify-center gap-[30px] xl:justify-between mt-[36px] items-center">
           <div className="flex gap-[30px] items-center">
             <div className="flex gap-[15px]">
               Кількість людей:{" "}
@@ -151,18 +165,18 @@ const Main = () => {
             </CustomBtn>
           </div>
           <div className="flex gap-[80px]">
-            <Link to="/history" className="text-[20px] text-black">
+            <Link to="/profile/history" className="text-[20px] text-black">
               Архів подій
             </Link>
-            <Link to="/account" className="text-[20px] text-black">
+            <Link to="/profile" className="text-[20px] text-black">
               Мій акаунт
             </Link>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-[30px] w-full mt-[64px]">
+        <div className="sm:flex-col xl:flex-col items-center xl:items-baseline xl:flex-none  xl:grid xl:grid-cols-2 gap-[30px] w-full mt-[64px]">
           {/* <MyMap className={"flex-1 h-[770px]"} /> */}
           <FilterBlock filter={filter} setFilter={setFilter} />
-          <ul className="flex flex-col gap-[50px]">
+          <ul className="flex flex-col gap-[50px] w-[90%]">
             {filteredCards!.length == 0 ? (
               <>
                 {cards &&

@@ -1,13 +1,24 @@
 import MyMap from "../map/Map";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import uuid from "react-uuid";
 import { axiosClient } from "../../App";
-import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import { useMutation, useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 import { skillsIcons } from "../../data";
+import { globalActions } from "../../redux/features/globalSlice";
+import { useState } from "react";
 
 function Information() {
+  const dispatch = useDispatch();
+
+  const { setAlert } = globalActions;
   const { id: paramsId } = useParams();
+
+  const [isDisabled, setIsDisabled] = useState(
+    localStorage.getItem(paramsId!) ? true : false
+  );
+
+  const navigate = useNavigate();
   const fetchCard = async () => {
     const response = await axiosClient.get(`/userEvent/${paramsId}`);
     return response.data;
@@ -15,18 +26,41 @@ function Information() {
   const { skillsList } = useSelector((state: any) => state.global);
 
   const { data } = useQuery("fetch-card", fetchCard);
-  if (!data || !skillsList) return;
 
+  const bookEvent = async () => {
+    const response = await axiosClient.get("/userEvent/book/" + paramsId);
+    return response.data;
+  };
+  const { mutate } = useMutation(bookEvent, {
+    onSuccess: () => {
+      console.log("success");
+      localStorage.setItem(paramsId!, "true");
+      dispatch(
+        setAlert({
+          status: true,
+          type: "success",
+          text: "Ви успішно записались на захід",
+        })
+      );
+    },
+  });
+
+  if (!data || !skillsList) return;
   const { title, description, phone, skills, startDate, email, build } = data;
 
   return (
     <>
-      <Link to="/">
-        <div className="my-[50px] px-[25px] text-blue-700">Back</div>
-      </Link>
+      <div
+        className="my-[50px] px-[25px] text-blue-700 cursor-pointer"
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        Back
+      </div>
+
       <div className="px-[25px]">
         <h1 className="text-8xl">{title}</h1>
-
         <div className="flex gap-40 mt-[10%]">
           <div>
             <p className="text-xl text-[#868E96]">Початок</p>
@@ -59,7 +93,13 @@ function Information() {
         </div>
         <div className="flex mt-[10%] gap-4  items-center">
           <div>
-            <button className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]">
+            <button
+              disabled={isDisabled}
+              className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]"
+              onClick={() => {
+                mutate();
+              }}
+            >
               Записатись
             </button>
           </div>
@@ -108,7 +148,13 @@ function Information() {
         </div>
         <div className="flex mt-[10%] mb-[10%] gap-4  items-center">
           <div>
-            <button className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]">
+            <button
+              disabled={isDisabled}
+              onClick={() => {
+                mutate();
+              }}
+              className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]"
+            >
               Записатись
             </button>
           </div>

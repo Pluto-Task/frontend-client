@@ -14,14 +14,14 @@ import Lock from "../../../assets/svg/lock";
 import Phone from "../../../assets/svg/phone";
 
 export type UserSkill = {
-  skill: string;
+  skill: number;
   exp: number;
 };
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const { setIsAuth, setAlert } = globalActions;
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const [name, setName] = useState({
     value: "",
@@ -53,7 +53,18 @@ const SignUpForm = () => {
   const [skills, setSkills] = useState<UserSkill[]>([]);
 
   const submitForm = async () => {
-    const response = await axiosClient.post("/User/register", {});
+    const response = await axiosClient.post("/User/register", {
+      email: email.value,
+      password: password1.value,
+      name: name.value,
+      phone: phone.value,
+      skills: skills.map((skill: any) => {
+        return {
+          id: skill.id,
+          "experienceYears": skill.exp,
+        };
+      }),
+    });
     return response.data;
   };
 
@@ -281,7 +292,7 @@ const SignUpForm = () => {
             <SkillList skills={skills} setSkills={setSkills} />
             <CustomBtn
               type="submit"
-              className="bg-blue-700 hover:bg-blue-800 text-white w-full mt-[32px]"
+              className="bg-blue-700 hover:bg-blue-800 text-white w-full font-[500] mt-[32px]"
             >
               Зареєструватися
             </CustomBtn>

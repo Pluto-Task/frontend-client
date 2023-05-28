@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Layout from "./components/Wrappers/Layout";
 import SignWrapper from "./components/Wrappers/SignWrapper";
@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { MainProfilePage } from "./components/Profile/MainProfilePage";
 import { GeneralInformation } from "./components/Profile/GeneralInformation/GeneralInformation";
 import { ArchiveEvents } from "./components/Profile/ArchiveEvents/ArchiveEvents";
+import { globalActions } from "./redux/features/globalSlice";
 
 export const axiosClient = axios.create({
   baseURL: "https://pluto.somee.com/api",
@@ -21,30 +22,34 @@ export const axiosClient = axios.create({
 
 const App = () => {
   const { isAuth } = useSelector((state: any) => state.global);
+  const dispatch = useDispatch();
+  const { setSkillsList } = globalActions;
 
-  useQuery("fetch-skills");
+  const fetchSkills = async () => {
+    const response = await axios.get(
+      "https://pluto.somee.com/api/skill/getAll",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response.data;
+  };
+
+  useQuery("fetch-skills", fetchSkills, {
+    onSuccess: (responseData) => {
+      dispatch(setSkillsList(responseData));
+    },
+  });
 
   return (
     <>
       <Layout>
-        {!isAuth ||
-          (false && (
-            <>
-              <SignWrapper>
-                <Routes>
-                  <Route path="/sign-in" element={<SignIn />} />
-                  <Route path="/sign-up" element={<SignUp />} />
-                  <Route
-                    path="*"
-                    element={<Navigate to="/sign-in" replace />}
-                  />
-                </Routes>
-              </SignWrapper>
-            </>
-          ))}
-        {isAuth ||
-          (true && (
-            <>
+        {!isAuth && (
+          <>
+            <SignWrapper>
               <Routes>
                 <Route path="/profile" element={<MainProfilePage />}>
                   <Route path="/profile" element={<GeneralInformation />} />
@@ -53,9 +58,24 @@ const App = () => {
                 <Route path="/events" element={<Main />} />
                 <Route path="/offers" element={<Main />} />
                 {/* <Route path="*" element={<Navigate to="/events" replace />} /> */}
+
+                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="*" element={<Navigate to="/sign-in" replace />} />
+
               </Routes>
-            </>
-          ))}
+            </SignWrapper>
+          </>
+        )}
+        {isAuth && (
+          <>
+            <Routes>
+              <Route path="/events" element={<Main />} />
+              <Route path="/offers" element={<Main />} />
+              <Route path="*" element={<Navigate to="/events" replace />} />
+            </Routes>
+          </>
+        )}
       </Layout>
     </>
   );

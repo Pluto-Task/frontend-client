@@ -13,6 +13,7 @@ import Card from "./Card";
 import uuid from "react-uuid";
 import { numberValid } from "../../../helpers";
 import CustomBtn from "../../custom/CustomBtn";
+import MyMapInfo from "../../map/MapInfo";
 
 const FilterBlock = (props: any) => {
   const { filter, setFilter } = props;
@@ -74,6 +75,7 @@ const Main = () => {
   });
   const [cards, setCards] = useState<any[] | null>(null);
   const [filteredCards, setFilteredCards] = useState<any[] | null>([]);
+  const [isSkillsFilter, setIsSkillsFilter] = useState(false);
 
   const fetchCards = async () => {
     const response = await axiosClient.get("/userEvent/getAll", {
@@ -87,9 +89,7 @@ const Main = () => {
   };
 
   const { data, refetch } = useQuery("fetch-cards", fetchCards, {
-    onSuccess: (responseData) => {
-      console.log("Success");
-    },
+    onSuccess: (responseData) => {},
   });
 
   const fetchFilteredCards = async () => {
@@ -125,13 +125,7 @@ const Main = () => {
   }, [data]);
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (isAddEvent == false) {
-      refetch();
-    }
+    refetch();
   }, [isAddEvent]);
 
   return (
@@ -140,7 +134,16 @@ const Main = () => {
       <main className="flex flex-col px-[25px]">
         <div className="flex flex-col sm:flex-row sm:flex sm:justify-center gap-[30px] xl:justify-between mt-[36px] items-center">
           <div className="flex gap-[30px] items-center">
-            <div className="flex gap-[15px]">
+            <Slider
+              changeCountOfPeople={(value: any) => {
+                setFilter((prev) => {
+                  const copy = { ...prev };
+                  copy.countOfPeople = Number(numberValid(value));
+                  return copy;
+                });
+              }}
+            />
+            {/* <div className="flex gap-[15px]">
               Кількість людей:{" "}
               <input
                 className="w-[50px] border rounded-[6px]"
@@ -154,7 +157,13 @@ const Main = () => {
                   });
                 }}
               />
-            </div>
+            </div> */}
+            <CustomBtn
+              onClick={() => setIsSkillsFilter(!isSkillsFilter)}
+              className={"bg-neutral-800 max-w-[150px] w-full text-[#fff]"}
+            >
+              {isSkillsFilter ? "Карта" : "Фільтр"}
+            </CustomBtn>
             <CustomBtn
               onClick={() => {
                 filteredCardsRefetch();
@@ -169,13 +178,15 @@ const Main = () => {
               Архів подій
             </Link>
             <Link to="/profile" className="text-[20px] text-black">
-              Мій акаунт
+              Мій профіль
             </Link>
           </div>
         </div>
-        <div className="sm:flex-col xl:flex-col items-center xl:items-baseline xl:flex-none  xl:grid xl:grid-cols-2 gap-[30px] w-full mt-[64px]">
-          {/* <MyMap className={"flex-1 h-[770px]"} /> */}
-          <FilterBlock filter={filter} setFilter={setFilter} />
+        <div className="sm:flex-col xl:flex-col items-center xl:items-start xl:flex-none  xl:grid xl:grid-cols-2 gap-[30px] w-full mt-[64px]">
+          {!isSkillsFilter && <MyMapInfo className={""} />}
+          {isSkillsFilter && (
+            <FilterBlock filter={filter} setFilter={setFilter} />
+          )}
           <ul className="flex flex-col gap-[50px] w-[90%]">
             {filteredCards!.length == 0 ? (
               <>

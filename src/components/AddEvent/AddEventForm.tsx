@@ -7,7 +7,6 @@ import CustomTextArea from "../custom/CustomTextArea";
 import CustomBtn from "../custom/CustomBtn";
 import { UserSkill } from "../Sign/SignUp/SignUpForm";
 import SkillListOption from "../Sign/SignUp/SkillList/SkillListOption";
-import axios from "axios";
 import { axiosClient } from "../../App";
 import jwtDecode from "jwt-decode";
 import { useMutation } from "react-query";
@@ -30,7 +29,7 @@ const ReturnSvg = () => {
 };
 
 const AddEventForm = () => {
-  const { setIsAddEvent } = globalActions;
+  const { setIsAddEvent, setAlert } = globalActions;
   const { skillsList } = useSelector((state: any) => state.global);
 
   const dispatch = useDispatch();
@@ -120,12 +119,20 @@ const AddEventForm = () => {
       coordinates: "50.448447,30.529039",
       email: decodedUser.email,
     });
+    return response.data;
   };
 
   const { mutate } = useMutation(postEventRequest, {
     onSuccess: (responseData) => {
       console.log("Success");
       dispatch(setIsAddEvent(false));
+      dispatch(
+        setAlert({
+          status: true,
+          type: "success",
+          text: "Івент було успішно додано",
+        })
+      );
     },
   });
 

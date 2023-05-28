@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-function Slider() {
+function Slider(props: any) {
+  const { changeCountOfPeople } = props;
   const [value, setValue] = useState(0);
   const [leftOffset, setLeftOffset] = useState(0);
 
@@ -11,11 +12,13 @@ function Slider() {
     const percent = (sliderValue / 30) * (sliderWidth - thumbWidth);
     setLeftOffset(percent);
     setValue(sliderValue);
+    changeCountOfPeople(sliderValue);
   };
 
   return (
     <>
-      <div>
+      <div className="w-[300px]">
+        <div>Кількість людей</div>
         <input
           className="sliderCustom"
           type="range"
@@ -24,14 +27,7 @@ function Slider() {
           value={value}
           onChange={handleChange}
         />
-        <div
-          className="slider-value"
-          style={{ left: `${leftOffset}px` }}
-        >{`${value}`}</div>
-      </div>
-      <div className="flex mt-[5%] ">
-        <p>1{`<`}</p>
-        <p className="ml-[auto]">{`>`}30</p>
+        <div className="slider-value">{`${value}`}</div>
       </div>
     </>
   );

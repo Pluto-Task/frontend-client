@@ -9,12 +9,12 @@ const NavBar = () => {
     {
       link: "/events",
       title: "Івенти",
-      total: 100,
+      total: "",
     },
     {
       link: "/offers",
       title: "Пропозиції",
-      total: 50,
+      total: "",
     },
   ];
 
@@ -45,7 +45,7 @@ const NavBar = () => {
           );
         })}
         <button
-          className="flex justify-center items-center"
+          className="flex justify-center items-center border-r border-black"
           onClick={() => dispatch(setIsAddEvent(true))}
         >
           <Cross

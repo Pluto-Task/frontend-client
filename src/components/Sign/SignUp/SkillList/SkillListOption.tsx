@@ -9,30 +9,8 @@ const SkillListOption = (props: {
   isChecked: boolean;
   setSkills: Function;
 }) => {
-  const isFirstRender = useRef(true);
   const { handleCheck, skill, isChecked, setSkills } = props;
   const [input, setInput] = useState<string>("");
-
-  const changeSkillExp = () => {
-    setSkills((prev: UserSkill[]) => {
-      if (prev && prev.length != 0) {
-        const copy = [...prev];
-        const toEdit = copy.find((copy: UserSkill) => copy.skill == skill.id);
-        toEdit!.exp = Number(input);
-        return copy;
-      }
-      return prev;
-    });
-  };
-
-  useEffect(() => {
-    if (isFirstRender) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    changeSkillExp();
-  }, [input]);
 
   return (
     <>
@@ -58,7 +36,21 @@ const SkillListOption = (props: {
               className="w-[40px] rounded-[4px] border outline-[2px] focus:outline-blue-700"
               type="text"
               value={input}
-              onChange={(e) => setInput(numberValid(e.target.value))}
+              onChange={(e) => {
+                setInput(numberValid(e.target.value));
+                setSkills((prev: UserSkill[]) => {
+                  console.log("Exp");
+                  if (prev && prev.length != 0) {
+                    const copy = [...prev];
+                    const toEdit = copy.find(
+                      (copyItem: UserSkill) => copyItem.skill == skill.id
+                    );
+                    toEdit!.exp = Number(numberValid(e.target.value));
+                    return copy;
+                  }
+                  return prev;
+                });
+              }}
             />
           </>
         )}

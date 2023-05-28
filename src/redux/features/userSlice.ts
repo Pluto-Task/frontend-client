@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedCity: "Київ",
+  selectedCity: "Львів",
 };
 
 const userSlice = createSlice({

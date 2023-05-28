@@ -75,3 +75,8 @@
   transform: translateX(-50%);
   white-space: nowrap;
 }
+
+.grid-information {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+}

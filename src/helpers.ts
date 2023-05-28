@@ -29,6 +29,6 @@ export const checkIsAuth = (error: any) => {
 };
 
 export const numberValid = (str: string) => {
-  const input = str.replace(/[^0-9.]/g, "");
+  const input = str.replace(/[^0-9]/g, "");
   return input;
 };

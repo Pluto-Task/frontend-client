@@ -18,7 +18,7 @@ function MyMap(props: any) {
         provider={mapTiler}
         dprs={[1, 2]} // add this to support hidpi/retina (2x) maps if your provider supports them
         height={300}
-        defaultCenter={[50.450001, 30.523333]}
+        defaultCenter={[49.836148, 24.025275]}
         defaultZoom={11}
       >
         <Marker width={50} anchor={[50.879, 4.6997]} />

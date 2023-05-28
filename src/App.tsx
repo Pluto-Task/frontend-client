@@ -7,6 +7,9 @@ import SignUp from "./components/Sign/SignUp/SignUp";
 import SignIn from "./components/Sign/SignIn/SignIn";
 import Main from "./components/pages/Main/Main";
 import { useQuery } from "react-query";
+import { MainProfilePage } from "./components/Profile/MainProfilePage";
+import { GeneralInformation } from "./components/Profile/GeneralInformation/GeneralInformation";
+import { ArchiveEvents } from "./components/Profile/ArchiveEvents/ArchiveEvents";
 import { globalActions } from "./redux/features/globalSlice";
 
 export const axiosClient = axios.create({
@@ -48,9 +51,18 @@ const App = () => {
           <>
             <SignWrapper>
               <Routes>
+                <Route path="/profile" element={<MainProfilePage />}>
+                  <Route path="/profile" element={<GeneralInformation />} />
+                  <Route path="/profile/history" element={<ArchiveEvents />} />
+                </Route>
+                <Route path="/events" element={<Main />} />
+                <Route path="/offers" element={<Main />} />
+                {/* <Route path="*" element={<Navigate to="/events" replace />} /> */}
+
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="*" element={<Navigate to="/sign-in" replace />} />
+
               </Routes>
             </SignWrapper>
           </>

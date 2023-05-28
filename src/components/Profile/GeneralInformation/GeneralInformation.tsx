@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { axiosClient } from "../../../App";
 
 interface User {
   email: string;
@@ -19,7 +20,7 @@ interface Skill {
   experienceYears: number;
 }
 
-const userTemp:User = {
+const userTemp: User = {
   email: "smth@out.com",
   name: "TestName2",
   phone: "123456",
@@ -41,82 +42,104 @@ const userTemp:User = {
 };
 
 export const GeneralInformation = () => {
+  const queryClient = useQueryClient();
+
+  const token = localStorage.getItem("token");
+
   const [user, setUser] = useState<User | undefined>(undefined);
 
-  const fetchSkills = async () => {
+  const fetchUser = async () => {
     const response = await axios.get("https://pluto.somee.com/api/user/get", {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   };
 
-  useQuery("fetch-skills", fetchSkills, {
+  useQuery("fetch-user", fetchUser, {
     onSuccess: (responseData) => {
       setUser(responseData);
     },
   });
 
+  const postEventRequest = async () => {
+    const response = await axiosClient.put("/user/update", {
+      name: user?.name,
+      phone: user?.phone,
+      skills: user?.skills,
+    });
+  };
+
+  const { mutate } = useMutation(postEventRequest, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: "fetch-user" });
+    },
+  });
+
   if (user === undefined) {
     // setUser(userTemp);
-    return <>Not found</>
+    return <>Not found</>;
   }
+
+  const submitHandel = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    mutate();
+  };
+
+  const handleNameField = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedUser = { ...user };
+    updatedUser.name = event.currentTarget.value;
+    setUser(updatedUser);
+  };
+
+  const handlePhoneField = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedUser = { ...user };
+    updatedUser.phone = event.currentTarget.value;
+    setUser(updatedUser);
+  };
 
   return (
     <div className="relative h-full">
       <p className="text-4xl text-[#ADB5BD] font-semibold mb-[40px]">
         Загальна інформація
       </p>
-      <div>
-        <label htmlFor="price" className="mb-[10px]">
-          Ім'я
-        </label>
+      <form onSubmit={submitHandel}>
         <div>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={user?.name}
-            className="rounded h-[52px] pt-[16px] pr-[12px] pb-[16px] pl-[12px] w-full border-2 border-[#E1E7EF] focus:border-[#1D4ED7] focus:border-2"
-          />
+          <label htmlFor="price" className="mb-[10px]">
+            Ім'я
+          </label>
+          <div>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={user?.name}
+              onChange={(event) => handleNameField(event)}
+              className="rounded h-[52px] pt-[16px] pr-[12px] pb-[16px] pl-[12px] w-full border-2 border-[#E1E7EF] focus:border-[#1D4ED7] focus:border-2"
+            />
+          </div>
         </div>
-      </div>
-      <div className="mt-[40px]">
-        <label htmlFor="price" className="mb-[10px]">
-          Email
-        </label>
-        <div>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={user?.email}
-            className="rounded h-[52px] pt-[16px] pr-[12px] pb-[16px] pl-[12px] w-full border-2 border-[#E1E7EF] focus:border-[#1D4ED7] focus:border-2"
-          />
+        <div className="mt-[40px]">
+          <label htmlFor="price" className="mb-[10px]">
+            Телефон
+          </label>
+          <div>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              value={user?.phone}
+              onChange={handlePhoneField}
+              className="rounded h-[52px] pt-[16px] pr-[12px] pb-[16px] pl-[12px] w-full border-2 border-[#E1E7EF] focus:border-[#1D4ED7] focus:border-2"
+            />
+          </div>
         </div>
-      </div>
-      <div className="mt-[40px]">
-        <label htmlFor="price" className="mb-[10px]">
-          Телефон
-        </label>
-        <div>
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            value={user?.phone}
-            className="rounded h-[52px] pt-[16px] pr-[12px] pb-[16px] pl-[12px] w-full border-2 border-[#E1E7EF] focus:border-[#1D4ED7] focus:border-2"
-          />
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="absolute bottom-3 bg-[#4174F6] w-full h-[60px] rounded text-white font-normal text-xl"
-      >
-        Submit
-      </button>
+        <button
+          type="submit"
+          className="absolute bottom-3 bg-[#4174F6] w-full h-[60px] rounded text-white font-normal text-xl"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

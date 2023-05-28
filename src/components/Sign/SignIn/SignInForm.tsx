@@ -8,6 +8,7 @@ import CustomInput from "../../custom/CustomInput";
 import CustomBtn from "../../custom/CustomBtn";
 import Mail from "../../../assets/svg/mail";
 import Lock from "../../../assets/svg/lock";
+import MyMap from "../../map/Map";
 
 
 const SignInForm = () => {

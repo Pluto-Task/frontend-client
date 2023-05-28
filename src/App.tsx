@@ -38,7 +38,6 @@ const App = () => {
   useQuery("fetch-skills", fetchSkills, {
     onSuccess: (responseData) => {
       dispatch(setSkillsList(responseData));
-      console.log(responseData);
     },
   });
 

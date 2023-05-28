@@ -10,7 +10,6 @@ import Mail from "../../../assets/svg/mail";
 import Lock from "../../../assets/svg/lock";
 import MyMap from "../../map/Map";
 
-
 const SignInForm = () => {
   const dispatch = useDispatch();
   const { setAlert, setIsAuth } = globalActions;
@@ -109,6 +108,13 @@ const SignInForm = () => {
           <div className="flex flex-col gap-[40px]">
             <CustomInput
               required
+              onChange={(e: any) => {
+                setEmail((prev) => {
+                  const copy = { ...prev };
+                  copy.value = e.target.value;
+                  return copy;
+                });
+              }}
               onFocus={(e: any) => handleOnFocus(e)}
               data-name="email"
               className={"w-full"}
@@ -119,6 +125,13 @@ const SignInForm = () => {
             />
             <CustomInput
               required
+              onChange={(e: any) => {
+                setPassword((prev) => {
+                  const copy = { ...prev };
+                  copy.value = e.target.value;
+                  return copy;
+                });
+              }}
               onFocus={(e: any) => handleOnFocus(e)}
               data-name="password"
               className={"w-full"}

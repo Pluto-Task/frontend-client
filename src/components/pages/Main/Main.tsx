@@ -80,7 +80,7 @@ const Main = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-[60px] w-full mt-[64px]">
-          <MyMap className={"flex-1 h-[770px]"} />
+          {/* <MyMap className={"flex-1 h-[770px]"} /> */}
           <FilterBlock filter={filter} setFilter={setFilter} />
         </div>
       </main>

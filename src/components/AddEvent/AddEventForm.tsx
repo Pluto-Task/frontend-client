@@ -89,13 +89,14 @@ const AddEventForm = () => {
     }
   };
 
+  const postEventRequest = async () => {};
+
   return (
     <>
       <form
         className="px-[30px] py-[15px] bg-white min-h-[500px] rounded-[6px]"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log("Submited");
         }}
       >
         <div className="flex flex-col">
@@ -110,8 +111,8 @@ const AddEventForm = () => {
               <ReturnSvg />
             </button>
 
-            <div>{titles[currentStep - 1]}</div>
-            <div>{`${currentStep}/3`}</div>
+            <div className="text-[20px]">{titles[currentStep - 1]}</div>
+            <div>{`${currentStep}/2`}</div>
           </div>
           {currentStep == 1 && (
             <>
@@ -217,11 +218,10 @@ const AddEventForm = () => {
                   </ul>
                 </div>
                 <CustomBtn
-                  type="button"
+                  type="submit"
                   className={"bg-blue-700 text-white mt-[35px]"}
-                  onClick={() => setCurrentStep((prev) => prev + 1)}
                 >
-                  Далі
+                  Додати івент
                 </CustomBtn>
               </div>
             </>

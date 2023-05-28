@@ -98,6 +98,8 @@ function Information() {
               className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]"
               onClick={() => {
                 mutate();
+                setIsDisabled(true);
+                localStorage.setItem(paramsId!, "true");
               }}
             >
               Записатись
@@ -152,6 +154,8 @@ function Information() {
               disabled={isDisabled}
               onClick={() => {
                 mutate();
+                setIsDisabled(true);
+                localStorage.setItem(paramsId!, "true");
               }}
               className="border bg-[#4174F6] rounded-md text-[white] w-[300px] h-[50px]"
             >

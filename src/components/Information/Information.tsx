@@ -20,7 +20,13 @@ function Information() {
 
   const navigate = useNavigate();
   const fetchCard = async () => {
-    const response = await axiosClient.get(`/userEvent/${paramsId}`);
+    const response = await axiosClient.get(`/userEvent/${paramsId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return response.data;
   };
   const { skillsList } = useSelector((state: any) => state.global);

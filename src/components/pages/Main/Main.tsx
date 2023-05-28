@@ -70,6 +70,7 @@ const Main = () => {
       <Header />
       <main className="flex flex-col ">
         <div className="flex justify-between">
+          <div />
           <div className="flex gap-[80px] mt-[36px]">
             <Link to="/history" className="text-[20px] text-black">
               Архів подій
